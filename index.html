@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>GoCamp</title>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
+    </head>
+    <body>
+            <nav class='navbar navbar-default'>
+                <div class='container-fluid'>
+                    <div class='navbar-header'>
+                        <a class='navbar-brand' href='/'><i class="fas fa-bus" aria-hidden="true"></i> TAMU Bus Route Finder</a>
+                    </div>
+                    <div class='collapse navbar-collapse'>
+                        <ul class='nav navbar-nav navbar-right'>
+                                <li><a href='/login'>Login</a></li>
+                                <li><a href='/register'>Sign Up</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+<div class='container'>
+    <div class='row'>
+        <h1 style='text-align: center;'>Search Route</h1>
+        <div style='width: 30%; margin: 25px auto;'>
+            <form method='POST'>
+                <div class='form-group'>
+                    <input class='form-control' id='src' type='text' name='source' placeholder="source">
+                </div>
+                <div class='form-group'>
+                    <input class='form-control' id='dest' type='text' name='destination' placeholder="destination">
+                </div>
+                <div >
+                    <input type="button" onclick="route_finder()" class='btn btn-lg btn-primary btn-block' value="Search">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class='container'>
+    <div class='row'>
+        <h2 style='text-align: center; color:maroon;' id='msg'></h2>
+    </div>
+</div>
+
+<script>
+
+function route_finder() {
+
+    source = document.getElementById("src").value;
+    dest = document.getElementById("dest").value;
+
+    var route_numbers = {};
+    route_numbers['Route 01 : Bonfire'] = ['Trigon', 'Commons', 'Ross @ N. Spence', 'Ross @ Ireland', 'Water Tower', 'Wehner', 'Kleberg', 'Reed Arena', 'MSC/Koldus'];
+    route_numbers['Route 02 : Replant'] = ['Fish Pond', 'School of Public Health', 'Equine Complex', 'Parson\'s Mounted Cav', 'HSC @ Atlas Pear', 'Health Science Center'];
+    route_numbers['Route 03 : Yell Practice'] = ['MSC', 'Fish Pond', 'Wehner', 'White Creek #1', 'White Creek #2'];
+    route_numbers['Route 04 : Gig \'Em'] = ['MSC', 'Fish Pond', 'Ross @ Ireland', 'Ross @ Spence', 'Ross @ Bizzell', 'Wisenbaker', 'The Gardens I', 'The Gardens II', 'Hensel @ Texas Ave', 'Water Tower', 'Wehner']
+    route_numbers['Route 05 : Bush School'] = ['MSC', 'Kleberg', 'Lot 97', 'Ag & Life Sciences', 'TTI', 'Bush School', 'Engr Research', 'UPD', 'Centeq', 'Bush Library', 'Reed Arena']
+    route_numbers['Route 06 : 12th Man'] = ['MSC', 'Beutel', 'Wehner', 'Vet School', 'Transit', 'Facilities', 'GSC', 'Turk Rd'];
+    route_numbers['Route 08 : Howdy'] = ['MSC', 'Beutel', 'Kleberg', 'Lot 97', 'P.E.A.P.', 'W.C.W.R', 'Olsen', 'Lot 100f', 'Lot 100c', 'Lot 100b'];
+    route_numbers['Route 09 : Vet School'] = ['MSC', 'Wehner', 'TIPS', 'NCTM', 'VTED'];
+    route_numbers['Route N04 : Gig \'Em Night'] = ['MSC', 'Fish Pond', 'Ross @ Ireland', 'Ross @ Spence', 'Ross @ Bizzell', 'Wisenbaker', 'The Gardens I', 'The Gardens II', 'Hensel @ Texas', 'Water Tower', 'SPH', 'White Creek Dorms #1', 'White Creek Dorms #2', 'Wehner'];
+    route_numbers['Route 12 : Reveille'] = ['MSC', 'Fish Pond', 'University Square', 'Ashburn', 'April Bloom-East', 'Laurel Ridge-East', 'The Element', 'Carter Creek', 'Broadmoor', 'Blinn', 'Willow Oaks', 'Laurel Ridge-West', 'April Bloom-West'];
+    route_numbers['Route 15 : Old Army'] = ['MSC', 'Fish Pond', 'College Main Parking', 'Spruce St.', 'Aggie Station', 'Village On The Creek', 'Z Isl&&er', 'Reveille Ranch', 'Wellborn @ Tee', 'Villa Maria @ Green St', 'Blinn Athletic', 'Academic Village'];
+    route_numbers['Route 22 : Excel'] = ['Trigon', 'The Marc', 'The Rail', 'Cripple Creek', 'Plantation Oaks', 'Briarwood', 'The Cambridge'];
+    route_numbers['Route 26 : Rudder'] = ['Trigon', 'Scandia', 'Lexington', 'Lemon Tree', 'Brentwood', 'Arbor Square', 'Cornell', 'Dartmouth', 'Central Park Ln', 'The Trails', 'Colgate Cir', 'Redstone', 'Alpine Cir'];
+    route_numbers['Route 27 : Ring Dance'] = ['Trigon', 'Scandia', 'Lexington', 'HEB', 'The Arbors', 'River Oaks Townhomes', 'The Lofts', 'Wolf Pen Creek', 'Village St'];
+    route_numbers['Route 31 : E-Walk'] = ['Trigon', 'The Woodlands', 'Willowick', 'Yellow House', 'University Park', 'Renaissance Park', 'Madison Pointe'];
+    route_numbers['Route 34 : Fish Camp'] = ['Trigon', 'First Baptist Church', 'Welsh@ Navarro', 'Deacon @ Aztec Ct', 'Fraternity Row', 'Navarro @ Axis', 'Navarro @ Pintail', 'Balcones'];
+    route_numbers['Route 35 : Hullabaloo'] = ['MSC', 'Kleberg', 'Pearce Pavilion', 'Woodsman', 'Gridiron', 'The Retreat', 'University Trails', 'Fox Run', 'The District'];
+    route_numbers['Route 36 : Cotton Bowl'] = ['Trigon', 'Treehouse', 'Woodsman', 'The Gateway', 'U Club', 'Callaway Villas'];
+    route_numbers['Route 40 : Century Tree'] = ['MSC', 'Kleberg', 'The Cottages', 'The Junction', 'The Barracks', 'Holleman South'];
+
+
+
+
+    var bus_1 = [];
+    var bus_2 = [];
+    var transit_1 = undefined;
+    var transit_2 = undefined;
+    finalRoute = '';
+
+    if (source == 'MSC' || source == 'Trigon') {
+        for (var key in route_numbers) {
+            for (var stops = 0; stops < route_numbers[key].length; stops++) {
+                if (route_numbers[key][0] == 'MSC' && route_numbers[key][stops] == dest) {
+                    bus_1.push(key);
+                } else if (route_numbers[key][0] == 'Trigon' && route_numbers[key][stops] == dest) {
+                    bus_2.push(key);
+                }
+            }
+        }
+        if (bus_1.length >= 1 && source == 'MSC') {
+            finalRoute = 'Take Bus ' + bus_1.join(', ') + ' from ' + source + ' to ' + dest + '.';
+        } else if (bus_1.length >= 1 && source == 'Trigon') {
+            finalRoute = 'Walk from Trigon to MSC and take Bus ' + bus_1.join(', ') + ' from MSC to ' + dest + '.';
+        } else if (bus_2.length >= 1 && source == 'Trigon') {
+            finalRoute = 'Take Bus ' + bus_2.join(', ') + ' from ' + source + ' to ' + dest + '.';
+        } else if (bus_2.length >= 1 && source == 'MSC') {
+            finalRoute = 'Walk from MSC to Trigon and take Bus ' + bus_2.join(', ') + ' from Trigon to ' + dest + '.';
+        }
+    } else {
+        for (var key in route_numbers) {
+            for (var stops = 0; stops < route_numbers[key].length; stops++) {
+                if (route_numbers[key][stops] == source || route_numbers[key][stops] == dest) {
+                    if (route_numbers[key][stops] == source) {
+                        bus_1.push(key);
+                        transit_1 = route_numbers[key][0];
+                    } else {
+                        bus_2.push(key);
+                        transit_2 = route_numbers[key][0];
+                    }
+                }
+            }
+        }
+
+        if (bus_1.length == 1 && bus_2.length == 1 && bus_1[0] == bus_2[0]) {
+            finalRoute = 'Take Bus ' + bus_1[0] + ' from ' + source + ' to ' + dest + '.';
+        } else if (bus_1.length == 1 && bus_2.length == 1 && bus_1[0] != bus_2[0]) {
+            finalRoute = 'Take Bus ' + bus_1[0] + ' from ' + source + ' to ' + transit_1 + ' and then either '+ bus_2.join(', ') + ' from ' + transit_2 + ' to ' + dest + '.';
+        } else if (bus_1.length == 1 && bus_2.length > 1) {
+            finalRoute = 'Take Bus ' + bus_1[0] + ' from ' + source + ' to ' + transit_1 + ' and then either '+ bus_2.join(', ') + ' from ' + transit_2 + ' to ' + dest + '.';
+        } else if (bus_1.length > 1 && bus_2.length == 1) {
+            finalRoute = 'Take either Bus ' + bus_1.join(', ') + ' from ' + source + ' to ' + transit_1 + ' and then ' + bus_2[0] + ' from ' + transit_2 + ' to ' + dest + '.';
+        }
+    }
+
+    document.getElementById("msg").innerHTML = finalRoute;
+}
+
+</script>
+
+</body>
+</html>
